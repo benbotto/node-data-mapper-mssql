@@ -1,4 +1,4 @@
-describe('MSSQLUpdate()', function() {
+xdescribe('MSSQLUpdate()', function() {
   'use strict';
 
   const insulin      = require('insulin');
@@ -18,7 +18,7 @@ describe('MSSQLUpdate()', function() {
   /**
    * Constructor.
    */
-  describe('.constructor()', function() {
+  xdescribe('.constructor()', function() {
     it('extends Update.', function() {
       const Update = insulin.get('ndm_Update');
       const upd    = new MSSQLUpdate(getFrom('users u'), {'u.firstName': 'jack'});
@@ -33,7 +33,7 @@ describe('MSSQLUpdate()', function() {
   /**
    * Build query
    */
-  describe('.buildQuery()', function() {
+  xdescribe('.buildQuery()', function() {
     it('returns null if there are no columns to update.', function() {
       const upd = new MSSQLUpdate(getFrom('users u'), {});
 

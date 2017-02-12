@@ -1,4 +1,4 @@
-describe('MSSQLQueryExecuter()', function() {
+xdescribe('MSSQLQueryExecuter()', function() {
   'use strict';
 
   const insulin            = require('insulin');
@@ -14,7 +14,7 @@ describe('MSSQLQueryExecuter()', function() {
   /**
    * Ctor.
    */
-  describe('.constructor()', function() {
+  xdescribe('.constructor()', function() {
     it('extends QueryExecuter.', function() {
       const QueryExecuter = insulin.get('ndm_QueryExecuter');
 
@@ -29,7 +29,7 @@ describe('MSSQLQueryExecuter()', function() {
   /**
    * Select.
    */
-  describe('.select()', function() {
+  xdescribe('.select()', function() {
     it('uses pool.query() to execute the select statements.', function() {
       const callback = {}; // Only checking the argument.  Normally this is a function.
       const params   = {};
@@ -43,7 +43,7 @@ describe('MSSQLQueryExecuter()', function() {
   /**
    * Insert.
    */
-  describe('.insert()', function() {
+  xdescribe('.insert()', function() {
     it('uses pool.query() to execute insert statements.', function() {
       const callback = {};
       const params   = {};
@@ -57,7 +57,7 @@ describe('MSSQLQueryExecuter()', function() {
   /**
    * Delete.
    */
-  describe('.delete()', function() {
+  xdescribe('.delete()', function() {
     it('uses pool.query() to execute delete statements.', function() {
       const callback = {};
       const params   = {};
@@ -71,7 +71,7 @@ describe('MSSQLQueryExecuter()', function() {
   /**
    * Update.
    */
-  describe('.update()', function() {
+  xdescribe('.update()', function() {
     it('uses pool.query() to execute update statements.', function() {
       const callback = {};
       const params   = {};

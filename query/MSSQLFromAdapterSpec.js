@@ -1,4 +1,4 @@
-describe('MSSQLFromAdapter()', function() {
+xdescribe('MSSQLFromAdapter()', function() {
   'use strict';
 
   const insulin          = require('insulin');
@@ -13,7 +13,7 @@ describe('MSSQLFromAdapter()', function() {
   /**
    * Ctor.
    */
-  describe('.constructor()', function() {
+  xdescribe('.constructor()', function() {
     it('extends FromAdapter.', function() {
       const FromAdapter = insulin.get('ndm_FromAdapter');
       const fa          = new MSSQLFromAdapter(db, escaper, qryExec, 'users u');
@@ -28,7 +28,7 @@ describe('MSSQLFromAdapter()', function() {
   /**
    * Select.
    */
-  describe('.select().', function() {
+  xdescribe('.select().', function() {
     it('returns a MSSQLSelect instance.', function() {
       const MSSQLSelect = insulin.get('ndm_MSSQLSelect');
       const sel         = new MSSQLFromAdapter(db, escaper, qryExec, {table: 'users'})
@@ -62,7 +62,7 @@ describe('MSSQLFromAdapter()', function() {
   /**
    * Delete.
    */
-  describe('.delete()', function() {
+  xdescribe('.delete()', function() {
     it('returns a MSSQLDelete instance.', function() {
       const MSSQLDelete = insulin.get('ndm_MSSQLDelete');
       const del         = new MSSQLFromAdapter(db, escaper, qryExec, 'users')
@@ -89,7 +89,7 @@ describe('MSSQLFromAdapter()', function() {
   /**
    * Update.
    */
-  describe('.update()', function() {
+  xdescribe('.update()', function() {
     it('returns a MSSQLUpdate instance.', function() {
       const MSSQLUpdate = insulin.get('ndm_MSSQLUpdate');
       const upd         = new MSSQLFromAdapter(db, escaper, qryExec, 'users u')

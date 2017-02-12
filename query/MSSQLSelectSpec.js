@@ -1,4 +1,4 @@
-describe('MSSQLSelect()', function() {
+xdescribe('MSSQLSelect()', function() {
   'use strict';
 
   const insulin      = require('insulin').mock();
@@ -20,7 +20,7 @@ describe('MSSQLSelect()', function() {
   /**
    * Ctor.
    */
-  describe('.constructor()', function() {
+  xdescribe('.constructor()', function() {
     it('extends Select.', function() {
       const Select = insulin.get('ndm_Select');
       const query  = new MSSQLSelect(getFrom('users'), qryExec);
@@ -32,7 +32,7 @@ describe('MSSQLSelect()', function() {
   /**
    * Build query.
    */
-  describe('.buildQuery()', function() {
+  xdescribe('.buildQuery()', function() {
     it('selects all columns if columns are not explicitly selected.', function() {
       const query     = new MSSQLSelect(getFrom('users'), qryExec);
       const queryMeta = query.buildQuery();

@@ -1,4 +1,4 @@
-  describe('MSSQLUpdateModel()', function() {
+  xdescribe('MSSQLUpdateModel()', function() {
   'use strict';
 
   const insulin          = require('insulin');
@@ -13,7 +13,7 @@
   /**
    * Create query.
    */
-  describe('.createQuery()', function() {
+  xdescribe('.createQuery()', function() {
     it('returns valid SQL and parameters.', function() {
       const upd = new MSSQLUpdateModel(db, escaper, qryExec, {
         users: {

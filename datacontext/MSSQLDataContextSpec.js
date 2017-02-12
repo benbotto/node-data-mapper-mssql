@@ -1,4 +1,4 @@
-describe('MSSQLDataContext()', function() {
+xdescribe('MSSQLDataContext()', function() {
   'use strict';
 
   const insulin          = require('insulin');
@@ -16,7 +16,7 @@ describe('MSSQLDataContext()', function() {
   /**
    * Ctor.
    */
-  describe('.constructor()', function() {
+  xdescribe('.constructor()', function() {
     it('extends DataContext.', function() {
       const dc          = new MSSQLDataContext(db, pool);
       const DataContext = insulin.get('ndm_DataContext');
@@ -33,7 +33,7 @@ describe('MSSQLDataContext()', function() {
   /**
    * Insert.
    */
-  describe('.insert()', function() {
+  xdescribe('.insert()', function() {
     it('returns an MSSQLInsert instance.', function() {
       const dc          = new MSSQLDataContext(db, pool);
       const insert      = dc.insert({});
@@ -54,7 +54,7 @@ describe('MSSQLDataContext()', function() {
   /**
    * From.
    */
-  describe('.from()', function() {
+  xdescribe('.from()', function() {
     it('returns a MSSQLFromAdapter instance.', function() {
       const dc               = new MSSQLDataContext(db, pool);
       const from             = dc.from({table: 'users'});
@@ -76,7 +76,7 @@ describe('MSSQLDataContext()', function() {
   /**
    * Update.
    */
-  describe('.update()', function() {
+  xdescribe('.update()', function() {
     it('returns a MSSQLUpdateModel instance.', function() {
       const dc               = new MSSQLDataContext(db, pool);
       const del              = dc.update({});
@@ -98,7 +98,7 @@ describe('MSSQLDataContext()', function() {
   /**
    * Delete.
    */
-  describe('.delete()', function() {
+  xdescribe('.delete()', function() {
     it('returns a MSSQLDeleteModel instance.', function() {
       const dc               = new MSSQLDataContext(db, pool);
       const del              = dc.delete({});
@@ -120,7 +120,7 @@ describe('MSSQLDataContext()', function() {
   /**
    * End.
    */
-  describe('.end()', function() {
+  xdescribe('.end()', function() {
     it('calls end on the queryExecuter\'s pool.', function() {
       const pool = jasmine.createSpyObj('pool', ['end']);
       const dc   = new MSSQLDataContext(db, pool);

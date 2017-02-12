@@ -1,4 +1,4 @@
-describe('MSSQLInsert()', function() {
+xdescribe('MSSQLInsert()', function() {
   'use strict';
 
   const insulin      = require('insulin');
@@ -13,7 +13,7 @@ describe('MSSQLInsert()', function() {
   /**
    * Ctor.
    */
-  describe('.constructor()', function() {
+  xdescribe('.constructor()', function() {
     it('extends INsert.', function() {
       const Insert = insulin.get('ndm_Insert');
       const ins    = new MSSQLInsert(db, escaper, qryExec, {});
@@ -25,7 +25,7 @@ describe('MSSQLInsert()', function() {
   /**
    * Build query.
    */
-  describe('.buildQuery()', function() {
+  xdescribe('.buildQuery()', function() {
     it('generates SQL and parameters for a single model.', function() {
       const query = new MSSQLInsert(db, escaper, qryExec, {
         users: {first: 'Sandy', last: 'Perkins'}

@@ -1,4 +1,4 @@
-describe('MSSQLDelete()', function() {
+xdescribe('MSSQLDelete()', function() {
   'use strict';
 
   const insulin      = require('insulin');
@@ -18,7 +18,7 @@ describe('MSSQLDelete()', function() {
   /**
    * Ctor.
    */
-  describe('.constructor()', function() {
+  xdescribe('.constructor()', function() {
     it('extends Delete.', function() {
       const del    = new MSSQLDelete(getFrom('users'));
       const Delete = insulin.get('ndm_Delete');
@@ -30,7 +30,7 @@ describe('MSSQLDelete()', function() {
   /**
    * Build query.
    */
-  describe('.buildQuery()', function() {
+  xdescribe('.buildQuery()', function() {
     it('builds a valid DELETE statment with parameters from the From instance.', function() {
       const from      = getFrom('users u')
         .where({$eq: {'u.userID': ':userID'}}, {userID: 42});

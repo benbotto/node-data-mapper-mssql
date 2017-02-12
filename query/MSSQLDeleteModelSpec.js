@@ -1,4 +1,4 @@
-describe('MSSQLDeleteModel()', function() {
+xdescribe('MSSQLDeleteModel()', function() {
   'use strict';
 
   const insulin          = require('insulin');
@@ -13,7 +13,7 @@ describe('MSSQLDeleteModel()', function() {
   /**
    * Create query.
    */
-  describe('.createQuery()', function() {
+  xdescribe('.createQuery()', function() {
     it('generates the correct sql and parameters for a single model.', function() {
       const del = new MSSQLDeleteModel(db, escaper, qryExec, {users: {ID: 1}});
 

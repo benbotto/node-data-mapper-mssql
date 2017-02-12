@@ -1,4 +1,4 @@
-describe('MSSQLEscaper()', function() {
+xdescribe('MSSQLEscaper()', function() {
   'use strict';
 
   const insulin      = require('insulin');
@@ -9,7 +9,7 @@ describe('MSSQLEscaper()', function() {
   /**
    * Ctor.
    */
-  describe('.constructor().', function() {
+  xdescribe('.constructor().', function() {
     it('extends Escaper.', function() {
       expect(escaper instanceof Escaper).toBe(true);
       expect(escaper instanceof MSSQLEscaper).toBe(true);
@@ -19,7 +19,7 @@ describe('MSSQLEscaper()', function() {
   /**
    * Escape property.
    */
-  describe('.escapeProperty()', function() {
+  xdescribe('.escapeProperty()', function() {
     it('escapes strings.', function() {
       expect(escaper.escapeProperty('name')).toBe('`name`');
     });
@@ -32,7 +32,7 @@ describe('MSSQLEscaper()', function() {
   /**
    * Escape FQC.
    */
-  describe('.escapeFullqyQualifiedColumn()', function() {
+  xdescribe('.escapeFullqyQualifiedColumn()', function() {
     // Escapes a fully-qualified column.
     it('escapes the table and the column independently.', function() {
       expect(escaper.escapeFullyQualifiedColumn('users.firstName')).toBe('`users`.`firstName`');
