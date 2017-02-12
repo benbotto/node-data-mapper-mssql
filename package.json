@@ -1,0 +1,31 @@
+{
+  "name": "node-data-mapper-mssql",
+  "description": "node-data-mapper MSSQL driver.",
+  "version": "1.1.0",
+  "author": {
+    "name": "Ben Botto"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/benbotto/node-data-mapper-mssql.git"
+  },
+  "engines": {
+    "node": ">=6.9.1"
+  },
+  "scripts": {},
+  "dependencies": {
+    "glob": "^7.0.6",
+    "insulin": "^1.0.7",
+    "mssql": "^3.3.0",
+    "ndm-schema-generator-mssql": "^1.0.5",
+    "node-data-mapper": "^1.1.18"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-jasmine-nodejs": "^1.5.4",
+    "grunt-jsdoc": "^2.1.0"
+  }
+}
