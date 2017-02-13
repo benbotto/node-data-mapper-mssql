@@ -42,7 +42,7 @@ function ndm_MSSQLInsertProducer(ModelTraverse, Insert, ParameterList) {
             const col      = table.getColumnByMapping(colMapping);
             const colName  = self.escaper.escapeProperty(col.name);
             const paramKey = `:${colMapping}`; 
-            let   colVal = meta.model[colMapping];
+            let   colVal   = meta.model[colMapping];
 
             // Transform the column if needed (e.g. from a boolean to a bit).
             if (col.converter.onSave)

@@ -1,4 +1,4 @@
-xdescribe('MSSQLInsert()', function() {
+describe('MSSQLInsert()', function() {
   'use strict';
 
   const insulin      = require('insulin');
@@ -13,7 +13,7 @@ xdescribe('MSSQLInsert()', function() {
   /**
    * Ctor.
    */
-  xdescribe('.constructor()', function() {
+  describe('.constructor()', function() {
     it('extends INsert.', function() {
       const Insert = insulin.get('ndm_Insert');
       const ins    = new MSSQLInsert(db, escaper, qryExec, {});
@@ -25,7 +25,7 @@ xdescribe('MSSQLInsert()', function() {
   /**
    * Build query.
    */
-  xdescribe('.buildQuery()', function() {
+  describe('.buildQuery()', function() {
     it('generates SQL and parameters for a single model.', function() {
       const query = new MSSQLInsert(db, escaper, qryExec, {
         users: {first: 'Sandy', last: 'Perkins'}
@@ -34,7 +34,7 @@ xdescribe('MSSQLInsert()', function() {
 
       expect(queryMeta.length).toBe(1);
       expect(queryMeta[0].sql).toEqual(
-        'INSERT INTO `users` (`firstName`, `lastName`)\n' +
+        'INSERT INTO [users] ([firstName], [lastName])\n' +
         'VALUES (:first, :last)');
       expect(queryMeta[0].params).toEqual({
         first: 'Sandy',
@@ -56,7 +56,7 @@ xdescribe('MSSQLInsert()', function() {
       const queryMeta = query.buildQuery();
 
       expect(queryMeta[0].sql).toEqual(
-        'INSERT INTO `users` (`firstName`, `lastName`)\n' +
+        'INSERT INTO [users] ([firstName], [lastName])\n' +
         'VALUES (:first, :last)');
       expect(queryMeta[0].params).toEqual({
         first: 'Sandy',
@@ -76,10 +76,10 @@ xdescribe('MSSQLInsert()', function() {
       expect(queryMeta.length).toBe(2);
 
       expect(queryMeta[0].sql).toEqual(
-        'INSERT INTO `users` (`firstName`, `lastName`)\n' +
+        'INSERT INTO [users] ([firstName], [lastName])\n' +
         'VALUES (:first, :last)');
       expect(queryMeta[1].sql).toEqual(
-        'INSERT INTO `users` (`firstName`, `lastName`)\n' +
+        'INSERT INTO [users] ([firstName], [lastName])\n' +
         'VALUES (:first, :last)');
 
       expect(queryMeta[0].params).toEqual({
