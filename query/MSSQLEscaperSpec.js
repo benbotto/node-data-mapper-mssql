@@ -1,4 +1,4 @@
-xdescribe('MSSQLEscaper()', function() {
+describe('MSSQLEscaper()', function() {
   'use strict';
 
   const insulin      = require('insulin');
@@ -9,7 +9,7 @@ xdescribe('MSSQLEscaper()', function() {
   /**
    * Ctor.
    */
-  xdescribe('.constructor().', function() {
+  describe('.constructor().', function() {
     it('extends Escaper.', function() {
       expect(escaper instanceof Escaper).toBe(true);
       expect(escaper instanceof MSSQLEscaper).toBe(true);
@@ -19,26 +19,26 @@ xdescribe('MSSQLEscaper()', function() {
   /**
    * Escape property.
    */
-  xdescribe('.escapeProperty()', function() {
+  describe('.escapeProperty()', function() {
     it('escapes strings.', function() {
-      expect(escaper.escapeProperty('name')).toBe('`name`');
+      expect(escaper.escapeProperty('name')).toBe('[name]');
     });
 
     it('preserves dots.', function() {
-      expect(escaper.escapeProperty('my.name')).toBe('`my.name`');
+      expect(escaper.escapeProperty('my.name')).toBe('[my.name]');
     });
   });
 
   /**
    * Escape FQC.
    */
-  xdescribe('.escapeFullqyQualifiedColumn()', function() {
+  describe('.escapeFullqyQualifiedColumn()', function() {
     // Escapes a fully-qualified column.
     it('escapes the table and the column independently.', function() {
-      expect(escaper.escapeFullyQualifiedColumn('users.firstName')).toBe('`users`.`firstName`');
-      expect(escaper.escapeFullyQualifiedColumn('users.first.Name')).toBe('`users`.`first.Name`');
-      expect(escaper.escapeFullyQualifiedColumn('phone_numbers.phoneNumber')).toBe('`phone_numbers`.`phoneNumber`');
-      expect(escaper.escapeFullyQualifiedColumn('phoneNumber')).toBe('`phoneNumber`');
+      expect(escaper.escapeFullyQualifiedColumn('users.firstName')).toBe('[users].[firstName]');
+      expect(escaper.escapeFullyQualifiedColumn('users.first.Name')).toBe('[users].[first.Name]');
+      expect(escaper.escapeFullyQualifiedColumn('phone_numbers.phoneNumber')).toBe('[phone_numbers].[phoneNumber]');
+      expect(escaper.escapeFullyQualifiedColumn('phoneNumber')).toBe('[phoneNumber]');
     });
   });
 });

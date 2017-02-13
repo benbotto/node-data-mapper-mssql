@@ -1,9 +1,9 @@
 'use strict';
 
 require('insulin').factory('ndm_MSSQLEscaper',
-  ['mssql', 'ndm_Escaper'], ndm_MSSQLEscaperProducer);
+  ['ndm_Escaper'], ndm_MSSQLEscaperProducer);
 
-function ndm_MSSQLEscaperProducer(mssql, Escaper) {
+function ndm_MSSQLEscaperProducer(Escaper) {
   /**
    * Helper class for escaping parts of a query under MSSQL.
    * @extends Escaper
@@ -22,7 +22,7 @@ function ndm_MSSQLEscaperProducer(mssql, Escaper) {
      * @return {string} The escaped property.
      */
     escapeProperty(prop) {
-      return mssql.escapeId(prop, true);
+      return `[${prop}]`;
     }
   }
 
