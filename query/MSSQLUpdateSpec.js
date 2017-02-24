@@ -1,4 +1,4 @@
-xdescribe('MSSQLUpdate()', function() {
+describe('MSSQLUpdate()', function() {
   'use strict';
 
   const insulin      = require('insulin');
@@ -18,7 +18,7 @@ xdescribe('MSSQLUpdate()', function() {
   /**
    * Constructor.
    */
-  xdescribe('.constructor()', function() {
+  describe('.constructor()', function() {
     it('extends Update.', function() {
       const Update = insulin.get('ndm_Update');
       const upd    = new MSSQLUpdate(getFrom('users u'), {'u.firstName': 'jack'});
@@ -33,7 +33,7 @@ xdescribe('MSSQLUpdate()', function() {
   /**
    * Build query
    */
-  xdescribe('.buildQuery()', function() {
+  describe('.buildQuery()', function() {
     it('returns null if there are no columns to update.', function() {
       const upd = new MSSQLUpdate(getFrom('users u'), {});
 
@@ -47,9 +47,10 @@ xdescribe('MSSQLUpdate()', function() {
       const queryMeta = upd.buildQuery();
 
       expect(queryMeta.sql).toBe(
-        'UPDATE  `users` AS `u`\n' +
-        'SET\n'+
-        '`u`.`firstName` = :u_firstName_0');
+        'UPDATE  [u]\n' +
+        'SET\n' +
+        '[u].[firstName] = :u_firstName_0\n' +
+        'FROM    [users] AS [u]');
 
       expect(queryMeta.params).toEqual({
         u_firstName_0: 'Joe'
@@ -64,10 +65,11 @@ xdescribe('MSSQLUpdate()', function() {
       const queryMeta = upd.buildQuery();
 
       expect(queryMeta.sql).toBe(
-        'UPDATE  `users` AS `u`\n' +
+        'UPDATE  [u]\n' +
         'SET\n'+
-        '`u`.`lastName` = :u_lastName_0,\n' +
-        '`u`.`firstName` = :u_firstName_1');
+        '[u].[lastName] = :u_lastName_0,\n' +
+        '[u].[firstName] = :u_firstName_1\n' +
+        'FROM    [users] AS [u]');
 
       expect(queryMeta.params).toEqual({
         u_lastName_0:  "O'Hare",
@@ -84,10 +86,11 @@ xdescribe('MSSQLUpdate()', function() {
       const queryMeta = upd.buildQuery();
 
       expect(queryMeta.sql).toBe(
-        'UPDATE  `users` AS `u`\n' +
+        'UPDATE  [u]\n' +
         'SET\n'+
-        '`u`.`firstName` = :u_firstName_0\n' +
-        'WHERE   `u`.`userID` = :userID');
+        '[u].[firstName] = :u_firstName_0\n' +
+        'FROM    [users] AS [u]\n' +
+        'WHERE   [u].[userID] = :userID');
 
       expect(queryMeta.params).toEqual({
         u_firstName_0: 'Joe',
@@ -106,12 +109,13 @@ xdescribe('MSSQLUpdate()', function() {
       const queryMeta = upd.buildQuery();
 
       expect(queryMeta.sql).toBe(
-        'UPDATE  `users` AS `u`\n' +
-        'INNER JOIN `phone_numbers` AS `pn` ON `u`.`userID` = `pn`.`userID`\n' +
+        'UPDATE  [u]\n' +
         'SET\n'+
-        '`u`.`firstName` = :u_firstName_0,\n' +
-        '`pn`.`phoneNumber` = :pn_phoneNumber_1\n' +
-        'WHERE   `u`.`userID` = 12');
+        '[u].[firstName] = :u_firstName_0,\n' +
+        '[pn].[phoneNumber] = :pn_phoneNumber_1\n' +
+        'FROM    [users] AS [u]\n' +
+        'INNER JOIN [phone_numbers] AS [pn] ON [u].[userID] = [pn].[userID]\n' +
+        'WHERE   [u].[userID] = 12');
     });
 
     it('uses onSave converters that are defined in the Database instance.', function() {

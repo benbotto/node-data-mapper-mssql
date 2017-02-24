@@ -16,12 +16,14 @@ function ndm_MSSQLUpdateProducer(Update, assert, ParameterList) {
      * execute along with query parameters.
      */
     buildQuery() {
-      const update    = this._from.getFromString().replace(/^FROM  /, 'UPDATE');
-      const joins     = this._from.getJoinString();
-      const where     = this._from.getWhereString();
-      const sets      = [];
-      const paramList = new ParameterList(this._from.paramList);
-      const queryMeta = {};
+      const updateAlias = this.escaper.escapeProperty(this._from.getFromMeta().as);
+      const update      = `UPDATE  ${updateAlias}`;
+      const from        = this._from.getFromString();
+      const joins       = this._from.getJoinString();
+      const where       = this._from.getWhereString();
+      const sets        = [];
+      const paramList   = new ParameterList(this._from.paramList);
+      const queryMeta   = {};
       let   set;
 
       // Add each key in the model as a query parameter.
@@ -51,7 +53,7 @@ function ndm_MSSQLUpdateProducer(Update, assert, ParameterList) {
       set = 'SET\n' + sets.join(',\n');
 
       // Build the SQL.
-      queryMeta.sql = [update, joins, set, where]
+      queryMeta.sql = [update, set, from, joins, where]
         .filter(part => part !== '')
         .join('\n');
 
