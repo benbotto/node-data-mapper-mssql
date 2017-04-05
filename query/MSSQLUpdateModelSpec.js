@@ -1,4 +1,4 @@
-  xdescribe('MSSQLUpdateModel()', function() {
+describe('MSSQLUpdateModel()', function() {
   'use strict';
 
   const insulin          = require('insulin');
@@ -13,7 +13,7 @@
   /**
    * Create query.
    */
-  xdescribe('.createQuery()', function() {
+  describe('.createQuery()', function() {
     it('returns valid SQL and parameters.', function() {
       const upd = new MSSQLUpdateModel(db, escaper, qryExec, {
         users: {
@@ -25,11 +25,12 @@
 
       qryExec.update.and.callFake(function(query, params) {
         expect(query).toBe(
-          'UPDATE  `users` AS `users`\n' +
+          'UPDATE  [users]\n' +
           'SET\n' +
-          '`users`.`firstName` = :users_firstName_1,\n' +
-          '`users`.`lastName` = :users_lastName_2\n' +
-          'WHERE   (`users`.`userID` = :users_userID_0)'
+          '[users].[firstName] = :users_firstName_1,\n' +
+          '[users].[lastName] = :users_lastName_2\n' +
+          'FROM    [users] AS [users]\n' +
+          'WHERE   ([users].[userID] = :users_userID_0)'
         );
 
         expect(params).toEqual({
