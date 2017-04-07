@@ -1,4 +1,4 @@
-xdescribe('MSSQLDeleteModel()', function() {
+describe('MSSQLDeleteModel()', function() {
   'use strict';
 
   const insulin          = require('insulin');
@@ -13,15 +13,15 @@ xdescribe('MSSQLDeleteModel()', function() {
   /**
    * Create query.
    */
-  xdescribe('.createQuery()', function() {
+  describe('.createQuery()', function() {
     it('generates the correct sql and parameters for a single model.', function() {
       const del = new MSSQLDeleteModel(db, escaper, qryExec, {users: {ID: 1}});
 
       qryExec.delete.and.callFake(function(query, params) {
         expect(query).toBe(
-          'DELETE  `users`\n' +
-          'FROM    `users` AS `users`\n' +
-          'WHERE   (`users`.`userID` = :users_userID_0)'
+          'DELETE  [users]\n' +
+          'FROM    [users] AS [users]\n' +
+          'WHERE   ([users].[userID] = :users_userID_0)'
         );
 
         expect(params).toEqual({
@@ -45,9 +45,9 @@ xdescribe('MSSQLDeleteModel()', function() {
 
       for (let i = 0; i < 2; ++i) {
         expect(qryExec.delete.calls.argsFor(i)[0]).toBe(
-          'DELETE  `users`\n' +
-          'FROM    `users` AS `users`\n' +
-          'WHERE   (`users`.`userID` = :users_userID_0)'
+          'DELETE  [users]\n' +
+          'FROM    [users] AS [users]\n' +
+          'WHERE   ([users].[userID] = :users_userID_0)'
         );
       }
 
