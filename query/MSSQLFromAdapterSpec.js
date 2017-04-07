@@ -1,4 +1,4 @@
-xdescribe('MSSQLFromAdapter()', function() {
+describe('MSSQLFromAdapter()', function() {
   'use strict';
 
   const insulin          = require('insulin');
@@ -13,7 +13,7 @@ xdescribe('MSSQLFromAdapter()', function() {
   /**
    * Ctor.
    */
-  xdescribe('.constructor()', function() {
+  describe('.constructor()', function() {
     it('extends FromAdapter.', function() {
       const FromAdapter = insulin.get('ndm_FromAdapter');
       const fa          = new MSSQLFromAdapter(db, escaper, qryExec, 'users u');
@@ -28,7 +28,7 @@ xdescribe('MSSQLFromAdapter()', function() {
   /**
    * Select.
    */
-  xdescribe('.select().', function() {
+  describe('.select().', function() {
     it('returns a MSSQLSelect instance.', function() {
       const MSSQLSelect = insulin.get('ndm_MSSQLSelect');
       const sel         = new MSSQLFromAdapter(db, escaper, qryExec, {table: 'users'})
@@ -42,10 +42,10 @@ xdescribe('MSSQLFromAdapter()', function() {
         .select();
 
       expect(sel.toString()).toBe(
-        'SELECT  `users`.`userID` AS `users.userID`,\n' +
-        '        `users`.`firstName` AS `users.firstName`,\n' +
-        '        `users`.`lastName` AS `users.lastName`\n' +
-        'FROM    `users` AS `users`');
+        'SELECT  [users].[userID] AS [users.userID],\n' +
+        '        [users].[firstName] AS [users.firstName],\n' +
+        '        [users].[lastName] AS [users.lastName]\n' +
+        'FROM    [users] AS [users]');
     });
 
     it('can be passed columns explicitly.', function() {
@@ -53,16 +53,16 @@ xdescribe('MSSQLFromAdapter()', function() {
         .select('users.userID', 'users.firstName');
 
       expect(sel.toString()).toBe(
-        'SELECT  `users`.`userID` AS `users.userID`,\n' +
-        '        `users`.`firstName` AS `users.firstName`\n' +
-        'FROM    `users` AS `users`');
+        'SELECT  [users].[userID] AS [users.userID],\n' +
+        '        [users].[firstName] AS [users.firstName]\n' +
+        'FROM    [users] AS [users]');
     });
   });
 
   /**
    * Delete.
    */
-  xdescribe('.delete()', function() {
+  describe('.delete()', function() {
     it('returns a MSSQLDelete instance.', function() {
       const MSSQLDelete = insulin.get('ndm_MSSQLDelete');
       const del         = new MSSQLFromAdapter(db, escaper, qryExec, 'users')
@@ -79,17 +79,17 @@ xdescribe('MSSQLFromAdapter()', function() {
         .delete('pn');
 
       expect(del.toString()).toBe(
-        'DELETE  `pn`\n' +
-        'FROM    `users` AS `u`\n' +
-        'INNER JOIN `phone_numbers` AS `pn` ON `u`.`userID` = `pn`.`userID`\n' + 
-        'WHERE   `u`.`userID` = 1');
+        'DELETE  [pn]\n' +
+        'FROM    [users] AS [u]\n' +
+        'INNER JOIN [phone_numbers] AS [pn] ON [u].[userID] = [pn].[userID]\n' + 
+        'WHERE   [u].[userID] = 1');
     });
   });
 
   /**
    * Update.
    */
-  xdescribe('.update()', function() {
+  describe('.update()', function() {
     it('returns a MSSQLUpdate instance.', function() {
       const MSSQLUpdate = insulin.get('ndm_MSSQLUpdate');
       const upd         = new MSSQLFromAdapter(db, escaper, qryExec, 'users u')
@@ -104,10 +104,11 @@ xdescribe('MSSQLFromAdapter()', function() {
         .update({'u.firstName': 'Joe'});
 
       expect(upd.toString()).toBe(
-        'UPDATE  `users` AS `u`\n' +
+        'UPDATE  [u]\n' +
         'SET\n' +
-        '`u`.`firstName` = :u_firstName_0\n' +
-        'WHERE   `u`.`userID` = 1');
+        '[u].[firstName] = :u_firstName_0\n' +
+        'FROM    [users] AS [u]\n' +
+        'WHERE   [u].[userID] = 1');
     });
   });
 });
