@@ -1,4 +1,4 @@
-xdescribe('MSSQLDelete()', function() {
+describe('MSSQLDelete()', function() {
   'use strict';
 
   const insulin      = require('insulin');
@@ -18,7 +18,7 @@ xdescribe('MSSQLDelete()', function() {
   /**
    * Ctor.
    */
-  xdescribe('.constructor()', function() {
+  describe('.constructor()', function() {
     it('extends Delete.', function() {
       const del    = new MSSQLDelete(getFrom('users'));
       const Delete = insulin.get('ndm_Delete');
@@ -30,7 +30,7 @@ xdescribe('MSSQLDelete()', function() {
   /**
    * Build query.
    */
-  xdescribe('.buildQuery()', function() {
+  describe('.buildQuery()', function() {
     it('builds a valid DELETE statment with parameters from the From instance.', function() {
       const from      = getFrom('users u')
         .where({$eq: {'u.userID': ':userID'}}, {userID: 42});
@@ -38,9 +38,9 @@ xdescribe('MSSQLDelete()', function() {
       const queryMeta = del.buildQuery();
 
       expect(queryMeta.sql).toBe(
-        'DELETE  `u`\n' +
-        'FROM    `users` AS `u`\n' +
-        'WHERE   `u`.`userID` = :userID'
+        'DELETE  [u]\n' +
+        'FROM    [users] AS [u]\n' +
+        'WHERE   [u].[userID] = :userID'
       );
 
       expect(queryMeta.params).toEqual({
@@ -56,10 +56,10 @@ xdescribe('MSSQLDelete()', function() {
       const queryMeta = del.buildQuery();
 
       expect(queryMeta.sql).toBe(
-        'DELETE  `pn`\n' +
-        'FROM    `users` AS `u`\n' +
-        'INNER JOIN `phone_numbers` AS `pn` ON `u`.`userID` = `pn`.`userID`\n' +
-        'WHERE   `u`.`userID` = :userID'
+        'DELETE  [pn]\n' +
+        'FROM    [users] AS [u]\n' +
+        'INNER JOIN [phone_numbers] AS [pn] ON [u].[userID] = [pn].[userID]\n' +
+        'WHERE   [u].[userID] = :userID'
       );
 
       expect(queryMeta.params).toEqual({
