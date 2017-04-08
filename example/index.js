@@ -3,13 +3,11 @@
 const ndm         = require('node-data-mapper');
 const ndm_mssql   = require('node-data-mapper-mssql');
 const MSSQLDriver = ndm_mssql.MSSQLDriver;
-
-const driver = new MSSQLDriver({
-  host:            'localhost',
+const driver      = new MSSQLDriver({
+  server:          'localhost',
   user:            'example',
   password:        'secret',
-  database:        'bike_shop',
-  connectionLimit: 10
+  database:        'bike_shop'
 });
 
 driver.generator.on('ADD_TABLE',  onAddTable);
