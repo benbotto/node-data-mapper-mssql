@@ -10,9 +10,8 @@ function ndm_MSSQLQueryExecuterProducer(QueryExecuter) {
   class MSSQLQueryExecuter extends QueryExecuter {
     /**
      * Initialize the QueryExecuter instance.
-     * @param {Object} pool - A MSSQL connection pool instance (or a single
-     * connection).  It is the user's responsibility to end the pool when the
-     * application closes.
+     * @param {Object} pool - The mssql object in a connected state.
+     * It's the user's responsibility to close this connection.
      */
     constructor(pool) {
       super();
@@ -28,6 +27,39 @@ function ndm_MSSQLQueryExecuterProducer(QueryExecuter) {
     }
 
     /**
+     * Prepare the parameters.  NDM parameters start with a colon, but in
+     * MSSQL they need to start with an at symbol.
+     * @private
+     * @param {string} query - The SQL to execute.
+     * @param {Object} params - An object containing query parameters for the
+     * query.  Each parameter will be preceded with a colon in query.
+     */
+    _prepareParameters(query, params) {
+      for (let key in params) {
+        // Note: this could cause some problems if there are words containing
+        // the key, for example if a table had a column containing a colon.
+        query = query.replace(new RegExp(`:${key}`, 'g'), `@${key}`);
+      }
+
+      return query;
+    }
+
+    /**
+     * Prepare the request object.
+     * @private
+     * @param {Object} params - An object containing query parameters for the
+     * query.  Each parameter will be preceded with a colon in query.
+     */
+    _prepareRequest(params) {
+      const request = new this.pool.Request();
+
+      for (let key in params)
+        request.input(key, params[key]);
+
+      return request;
+    }
+
+    /**
      * Execute a select query.
      * @param {string} query - The SQL to execute.
      * @param {Object} params - An object containing query parameters for the
@@ -37,7 +69,9 @@ function ndm_MSSQLQueryExecuterProducer(QueryExecuter) {
      * @return {void}
      */
     select(query, params, callback) {
-      this.pool.query(query, params, callback);
+      this
+        ._prepareRequest(params)
+        .query(this._prepareParameters(query, params), callback);
     }
 
     /**
@@ -50,7 +84,49 @@ function ndm_MSSQLQueryExecuterProducer(QueryExecuter) {
      * @return {void}
      */
     insert(query, params, callback) {
-      this.pool.query(query, params, callback);
+      const request = this._prepareRequest(params);
+      let   sql     = this._prepareParameters(query, params);
+
+      // The query needs to get the newly inserted ID if it is an IDENTITY.
+      sql += '\nSELECT  SCOPE_IDENTITY() AS insertId';
+
+      request.query(sql, onQuery);
+
+      function onQuery(err, res) {
+        if (err)
+          callback(err);
+        else {
+          // The result is an object with insertId set.  It will be null if
+          // the primary key of the table is not an IDENTITY.
+          callback(null, res[0]);
+        }
+      }
+    }
+
+    /**
+     * Private helper for updating or deleting, which do the same
+     * thing and return the same structure.
+     * @private
+     * @param {string} query - The SQL to execute.
+     * @param {Object} params - An object containing query parameters for the
+     * query.  Each parameter will be preceded with a colon in query.
+     * @param {QueryExecuter~mutateCallback} callback - A callback function
+     * that is called after the query is executed.
+     * @return {void}
+     */
+    _mutate(query, params, callback) {
+      this
+        ._prepareRequest(params)
+        .query(this._prepareParameters(query, params), onQuery);
+
+      function onQuery(err, res, affectedRows) {
+        if (err)
+          callback(err);
+        else {
+          // The result is an object with an affectedRows property.
+          callback(null, {affectedRows});
+        }
+      }
     }
 
     /**
@@ -63,7 +139,7 @@ function ndm_MSSQLQueryExecuterProducer(QueryExecuter) {
      * @return {void}
      */
     update(query, params, callback) {
-      this.pool.query(query, params, callback);
+      this._mutate(query, params, callback);
     }
 
     /**
@@ -76,7 +152,7 @@ function ndm_MSSQLQueryExecuterProducer(QueryExecuter) {
      * @return {void}
      */
     delete(query, params, callback) {
-      this.pool.query(query, params, callback);
+      this._mutate(query, params, callback);
     }
   }
 
