@@ -1,4 +1,4 @@
-xdescribe('MSSQLDataContext()', function() {
+describe('MSSQLDataContext()', function() {
   'use strict';
 
   const insulin          = require('insulin');
@@ -16,7 +16,7 @@ xdescribe('MSSQLDataContext()', function() {
   /**
    * Ctor.
    */
-  xdescribe('.constructor()', function() {
+  describe('.constructor()', function() {
     it('extends DataContext.', function() {
       const dc          = new MSSQLDataContext(db, pool);
       const DataContext = insulin.get('ndm_DataContext');
@@ -33,7 +33,7 @@ xdescribe('MSSQLDataContext()', function() {
   /**
    * Insert.
    */
-  xdescribe('.insert()', function() {
+  describe('.insert()', function() {
     it('returns an MSSQLInsert instance.', function() {
       const dc          = new MSSQLDataContext(db, pool);
       const insert      = dc.insert({});
@@ -54,7 +54,7 @@ xdescribe('MSSQLDataContext()', function() {
   /**
    * From.
    */
-  xdescribe('.from()', function() {
+  describe('.from()', function() {
     it('returns a MSSQLFromAdapter instance.', function() {
       const dc               = new MSSQLDataContext(db, pool);
       const from             = dc.from({table: 'users'});
@@ -76,7 +76,7 @@ xdescribe('MSSQLDataContext()', function() {
   /**
    * Update.
    */
-  xdescribe('.update()', function() {
+  describe('.update()', function() {
     it('returns a MSSQLUpdateModel instance.', function() {
       const dc               = new MSSQLDataContext(db, pool);
       const del              = dc.update({});
@@ -98,7 +98,7 @@ xdescribe('MSSQLDataContext()', function() {
   /**
    * Delete.
    */
-  xdescribe('.delete()', function() {
+  describe('.delete()', function() {
     it('returns a MSSQLDeleteModel instance.', function() {
       const dc               = new MSSQLDataContext(db, pool);
       const del              = dc.delete({});
@@ -120,13 +120,13 @@ xdescribe('MSSQLDataContext()', function() {
   /**
    * End.
    */
-  xdescribe('.end()', function() {
-    it('calls end on the queryExecuter\'s pool.', function() {
-      const pool = jasmine.createSpyObj('pool', ['end']);
+  describe('.end()', function() {
+    it('calls close on the queryExecuter\'s pool.', function() {
+      const pool = jasmine.createSpyObj('pool', ['close']);
       const dc   = new MSSQLDataContext(db, pool);
 
       dc.end();
-      expect(pool.end).toHaveBeenCalled();
+      expect(pool.close).toHaveBeenCalled();
     });
   });
 });

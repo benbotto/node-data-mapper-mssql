@@ -91,7 +91,7 @@ function ndm_MSSQLDataContextProducer(DataContext, MSSQLEscaper, MSSQLQueryExecu
      * @return {void}
      */
     end() {
-      this.queryExecuter.pool.end();
+      this.queryExecuter.pool.close();
     }
   }
 
