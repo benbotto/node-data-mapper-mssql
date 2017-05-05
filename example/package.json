@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-data-mapper-mssql": "^1.1.1"
+    "node-data-mapper-mssql": "^1.1.3"
   }
 }

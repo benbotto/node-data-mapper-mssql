@@ -1,7 +1,7 @@
 {
   "name": "node-data-mapper-mssql",
   "description": "node-data-mapper MSSQL driver.",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "author": {
     "name": "Ben Botto"
   },
@@ -19,7 +19,7 @@
     "insulin": "^1.0.7",
     "mssql": "^3.3.0",
     "ndm-schema-generator-mssql": "^1.1.2",
-    "node-data-mapper": "^1.1.18"
+    "node-data-mapper": "^1.1.22"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
