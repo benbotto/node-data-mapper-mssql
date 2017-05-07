@@ -43,6 +43,6 @@ function onAddTable(table) {
 function onAddColumn(col, table) {
   // Add a converter based on the type.
   if (col.dataType === 'bit')
-    col.converter = ndm.bitConverter;
+    col.converter = ndm.booleanConverter;
 }
 
